@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en-GB" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Information | Nikki Studio</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Google Tag (gtag.js) & Consent Mode v2 -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        (function() {
+            var consent = localStorage.getItem('nikki_cookie_consent');
+            gtag('consent', 'default', {
+                'analytics_storage': consent === 'granted' ? 'granted' : 'denied',
+                'ad_storage': 'denied',
+                'ad_user_data': 'denied',
+                'ad_personalization': 'denied',
+                'wait_for_update': 500
+            });
+        })();
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PQKY693VH4"></script>
+    <script>
+        gtag('js', new Date());
+        gtag('config', 'G-PQKY693VH4', {
+            'send_page_view': true
+        });
+    </script>
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        nkBlack: '#0A0A0A',
+                        nkPink: '#FF4FA3',
+                        nkSoftPink: '#FFC6E3',
+                        nkSoftBg: '#FFF5FA',
+                        nkWhite: '#FFFFFF',
+                        nkDarkText: '#222222',
+                        nkGrey: '#D9D9D9',
+                    },
+                    fontFamily: {
+                        sans: ['"Inter"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-nkSoftBg min-h-screen flex items-center justify-center p-4 antialiased text-nkDarkText relative selection:bg-nkSoftPink selection:text-nkBlack">
+    
+    <!-- Password Overlay -->
+    <div id="password-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-nkSoftBg px-4">
+        <div class="bg-nkWhite rounded-3xl shadow-xl shadow-pink-500/5 w-full max-w-sm p-8 text-center border border-pink-50">
+            <img src="../img/Logo.png" alt="Nikki Studio Logo" class="h-12 w-auto object-contain mx-auto mb-4">
+            <p class="text-gray-500 text-sm mb-8 font-light">Enter the password to view payment details.</p>
+            <div class="relative w-full mb-4">
+                <input type="password" id="pass-input" class="w-full border border-gray-200 rounded-xl px-4 py-3.5 focus:outline-none focus:border-nkPink focus:ring-1 focus:ring-nkPink text-center pr-12 font-medium" placeholder="Password">
+                <button type="button" id="toggle-pass" class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-nkBlack transition-colors">
+                    <svg id="eye-icon" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                </button>
+            </div>
+            <button id="pass-btn" class="w-full bg-nkBlack hover:bg-nkPink transition-colors text-nkWhite font-medium py-3.5 rounded-xl mb-6">Enter</button>
+            <a href="../index.html" class="text-sm text-gray-400 hover:text-nkBlack transition-colors underline underline-offset-4">Return to website</a>
+            <p id="pass-error" class="text-red-500 text-sm mt-4 hidden font-medium">Incorrect password, please try again.</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content" class="bg-nkWhite rounded-3xl shadow-xl shadow-pink-500/5 w-full max-w-[440px] p-8 md:p-10 hidden border border-pink-50">
+        
+        <!-- Header -->
+        <div class="text-center mb-10">
+            <img src="../img/Logo.png" alt="Nikki Studio Logo" class="h-12 w-auto object-contain mx-auto mb-2">
+            <p class="text-gray-500 text-sm md:text-base font-light">Make a payment by bank transfer</p>
+        </div>
+
+        <!-- Bank Details Card -->
+        <div class="bg-nkSoftBg/50 rounded-2xl p-6 mb-8 border border-pink-50">
+            <!-- Account Name -->
+            <div class="mb-5 border-b border-gray-100 pb-5">
+                <p class="text-xs font-semibold text-gray-400 tracking-widest uppercase mb-1">Account Name</p>
+                <p class="text-nkBlack font-medium text-lg">Nicole Furoni Ribeiro</p>
+            </div>
+            
+            <!-- Sort Code -->
+            <div class="mb-5 border-b border-gray-100 pb-5">
+                <p class="text-xs font-semibold text-gray-400 tracking-widest uppercase mb-1">Sort Code</p>
+                <p class="text-nkBlack font-medium text-lg">40-43-41</p>
+            </div>
+
+            <!-- Account Number -->
+            <div class="mb-5 border-b border-gray-100 pb-5">
+                <p class="text-xs font-semibold text-gray-400 tracking-widest uppercase mb-1">Account Number</p>
+                <p class="text-nkBlack font-medium text-lg">02449595</p>
+            </div>
+
+            <!-- Payment Reference -->
+            <div>
+                <p class="text-xs font-semibold text-gray-400 tracking-widest uppercase mb-1">Payment Reference</p>
+                <p class="text-nkBlack font-medium text-lg">Your name</p>
+            </div>
+        </div>
+
+        <!-- Button -->
+        <a href="../index.html" class="block w-full bg-nkBlack hover:bg-nkPink transition-colors text-nkWhite font-medium text-center py-4 rounded-xl text-[15px] mb-8">
+            Return to Nikki Studio
+        </a>
+
+        <!-- Footer Text -->
+        <div class="text-center px-2">
+            <p class="text-xs text-gray-500 leading-relaxed mb-4 font-light">
+                Please check the payment details carefully before making your transfer. Your appointment will be confirmed according to Nikki Studio's booking policy.
+            </p>
+            <div class="space-y-1">
+                <a href="https://www.nikkistudio.co.uk" class="text-xs text-gray-400 hover:text-nkBlack transition-colors font-medium block">
+                    www.nikkistudio.co.uk
+                </a>
+                <p class="text-[11px] text-gray-400 font-light">
+                    Developed by <a href="https://www.conexxus.co.uk/" target="_blank" rel="noopener noreferrer" class="hover:text-nkPink transition-colors underline underline-offset-2">CONEXXUS Digital</a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.getElementById('toggle-pass').addEventListener('click', function() {
+            var passInput = document.getElementById('pass-input');
+            var eyeIcon = document.getElementById('eye-icon');
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                eyeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />';
+            } else {
+                passInput.type = 'password';
+                eyeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />';
+            }
+        });
+        document.getElementById('pass-btn').addEventListener('click', function() {
+            var pass = document.getElementById('pass-input').value;
+            if (pass === 'nikkistudio') {
+                document.getElementById('password-overlay').classList.add('hidden');
+                document.getElementById('main-content').classList.remove('hidden');
+            } else {
+                document.getElementById('pass-error').classList.remove('hidden');
+                document.getElementById('pass-input').classList.add('border-red-500');
+            }
+        });
+        document.getElementById('pass-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('pass-btn').click();
+            }
+        });
+        document.getElementById('pass-input').addEventListener('input', function() {
+            document.getElementById('pass-error').classList.add('hidden');
+            document.getElementById('pass-input').classList.remove('border-red-500');
+        });
+    </script>
+
+    <!-- Analytics & Consent -->
+    <script src="../analytics.js"></script>
+</body>
+</html>
