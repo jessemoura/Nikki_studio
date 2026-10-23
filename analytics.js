@@ -89,12 +89,23 @@
 
     // 4. Safe GA4 Dispatcher
     function sendGa4Event(eventName, params) {
-        if (typeof window.gtag === 'function') {
-            window.gtag('event', eventName, params);
+        var eventParams = Object.assign({}, params, {
+            'transport_type': 'beacon',
+            'send_to': 'G-PQKY693VH4'
+        });
+
+        // Debug mode support via URL query or DevTools
+        if (window.location.search.includes('debug=true') || window.location.search.includes('ga_debug') || window.localStorage.getItem('ga_debug') === 'true') {
+            eventParams.debug_mode = true;
         }
-        // Dispatch custom DOM event for testing / debugging
+
+        if (typeof window.gtag === 'function') {
+            window.gtag('event', eventName, eventParams);
+        }
+
+        // Dispatch custom DOM event for local automated test validation
         window.dispatchEvent(new CustomEvent('nikki_ga4_event', {
-            detail: { event: eventName, params: params }
+            detail: { event: eventName, params: eventParams }
         }));
     }
 
@@ -118,6 +129,7 @@
                         lowerText.includes('book your set') ||
                         lowerText.includes('book service') ||
                         lowerText.includes('complete booking') ||
+                        lowerHref.includes('#booking') ||
                         isSubmit;
 
         // WhatsApp Event
@@ -146,7 +158,7 @@
             }
         }
 
-        // Facebook Event (prepared for present and future links)
+        // Facebook Event (ready for present and future links)
         if (isFacebook) {
             var fbKey = 'fb_' + location + '_' + href;
             if (!isDebounced(fbKey, 600)) {
@@ -205,11 +217,31 @@
     function applyConsent(granted) {
         var status = granted ? 'granted' : 'denied';
         localStorage.setItem('nikki_cookie_consent', status);
+
         if (typeof window.gtag === 'function') {
             window.gtag('consent', 'update', {
-                'analytics_storage': status
+                'analytics_storage': status,
+                'ad_storage': status,
+                'ad_user_data': status,
+                'ad_personalization': status
             });
+
+            if (granted) {
+                // Immediately configure beacon transport and fire consented page_view
+                window.gtag('config', 'G-PQKY693VH4', {
+                    'send_page_view': false,
+                    'transport_type': 'beacon'
+                });
+
+                window.gtag('event', 'page_view', {
+                    'page_location': window.location.href,
+                    'page_title': document.title,
+                    'transport_type': 'beacon',
+                    'send_to': 'G-PQKY693VH4'
+                });
+            }
         }
+
         var banner = document.getElementById('nikki-cookie-banner');
         if (banner) {
             banner.style.opacity = '0';

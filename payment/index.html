@@ -10,24 +10,27 @@
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
-        (function() {
-            var consent = localStorage.getItem('nikki_cookie_consent');
-            gtag('consent', 'default', {
-                'analytics_storage': consent === 'granted' ? 'granted' : 'denied',
-                'ad_storage': 'denied',
-                'ad_user_data': 'denied',
-                'ad_personalization': 'denied',
-                'wait_for_update': 500
-            });
-        })();
-    </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PQKY693VH4"></script>
-    <script>
+        
+        var savedConsent = localStorage.getItem('nikki_cookie_consent');
+        var isGranted = (savedConsent === 'granted');
+
+        gtag('consent', 'default', {
+            'analytics_storage': isGranted ? 'granted' : 'denied',
+            'ad_storage': isGranted ? 'granted' : 'denied',
+            'ad_user_data': isGranted ? 'granted' : 'denied',
+            'ad_personalization': isGranted ? 'granted' : 'denied',
+            'wait_for_update': 500
+        });
+
         gtag('js', new Date());
+
         gtag('config', 'G-PQKY693VH4', {
-            'send_page_view': true
+            'send_page_view': isGranted,
+            'anonymize_ip': true,
+            'transport_type': 'beacon'
         });
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PQKY693VH4"></script>
     
     <!-- Favicons -->
     <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
